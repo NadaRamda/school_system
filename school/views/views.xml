@@ -1,0 +1,77 @@
+<odoo>
+  <data>
+      <record model="ir.actions.act_window" id="school.action_window_3">
+          <field name="name">Students</field>
+          <field name="res_model">school.students</field>
+          <field name="view_mode">tree,form</field>
+          <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+                   Students
+          </p>
+          </field>
+      </record>
+       <record model="ir.actions.act_window" id="school.action_window">
+          <field name="name">Subjects</field>
+          <field name="res_model">school.subject</field>
+          <field name="view_mode">tree,form</field>
+          <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+                  School Subject
+          </p>
+          </field>
+      </record>
+       <record model="ir.actions.act_window" id="school.action_window_2">
+          <field name="name">Class</field>
+          <field name="res_model">school.class</field>
+          <field name="view_mode">tree,form</field>
+          <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+                  School class
+          </p>
+          </field>
+      </record>
+
+      <record model="ir.actions.act_window" id="school.action_window_1">
+          <field name="name">Grades</field>
+          <field name="res_model">school.grade</field>
+          <field name="view_mode">tree,form</field>
+          <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+                  Student Assets
+          </p>
+          </field>
+      </record>
+    <!-- Top menu item -->
+    <menuitem name="School"
+              id="school.menu_root"/>
+    <!-- menu categories -->
+    <menuitem name="school"
+              id="school.menu_1"
+              parent="school.menu_root"/>
+
+
+      <menuitem name="Student"
+              id="school.menu_2"
+              parent="school.menu_root"/>
+    <!-- actions -->
+    <menuitem name="Grade"
+              id="school.school_grade"
+              parent="school.menu_1"
+              action="school.action_window"/>
+    <menuitem name="class"
+              id="school.class"
+              parent="school.menu_1"
+              action="school.action_window_1"/>
+
+
+
+      <menuitem name="Student"
+              id="school.Student"
+              parent="school.menu_2"
+              action="school.action_window_3"/>
+    <menuitem name="Subject"
+              id="school.Subject"
+              parent="school.menu_2"
+              action="school.action_window_2"/>
+  </data>
+</odoo>
