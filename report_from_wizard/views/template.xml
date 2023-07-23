@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="report_pdf_wiz_contract" model="ir.actions.report">
+            <field name="name">report pdf wiz</field>
+            <field name="model">contract.report.wizard</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">report_from_wizard.report_contract</field>
+            <field name="report_file">report_from_wizard.report_contract</field>
+            <field name="binding_model_id" ref="report_from_wizard.model_contract_report_wizard"/>
+            <field name="binding_type">report</field>
+        </record>
+        <template id="report_contract">
+            <t t-call="web.html_container">
+                <h2>Contracts</h2>
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <div class="text-center">
+                            <h2>Contracts</h2>
+                        </div>
+                        <div class="row mt-4 mb-4">
+                            <div class="col-auto col-3 mw-100 mb-2">
+                                <strong>Start :</strong>
+                                 <p class="m-0" t-esc="data['date']"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col"><span>Employee Name</span></th>
+                                    <th scope="col"><span>State</span></th>
+                                    <th scope="col"><span>Date</span></th>
+                                </tr>
+                            </thead>
+                            <t t-foreach="employees" t-as="o">
+                                <tr>
+                                    <td scope="row"><span t-field="o.employee_id.name"/></td>
+                                    <th scope="row"><span t-esc="o.state"/></th>
+                                    <th scope="row"><span t-field="o.date_start"/></th>
+                                </tr>
+                            </t>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

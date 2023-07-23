@@ -1,5 +1,63 @@
 <odoo>
   <data>
+      <record id="school-students_form_view" model="ir.ui.view">
+            <field name="name">school-students_form_view</field>
+            <field name="model">school.students</field>
+            <field name="arch" type="xml">
+                <form string="student">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="teacher_id"/>
+                                <field name="student_id"/>
+                            </group>
+                            <group>
+                                <field name="gender"/>
+                                <field name="subject_ids"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <html>
+                            <body>
+                            <button onclick="getLocation()">Click me</button>
+                                <p id="demo"></p>
+                            </body>
+                    </html>
+                    <script>
+<!--                            console.log("nada")-->
+<!--                            if ("geolocation" in navigator) {-->
+<!--                            navigator.geolocation.getCurrentPosition(-->
+<!--                            (position) => {-->
+<!--                            const latitude = position.coords.latitude;-->
+<!--                            const longitude = position.coords.longitude;-->
+
+<!--                            console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);-->
+<!--                            },-->
+<!--                            (error) => {-->
+<!--                            console.log("Error getting location:", error);-->
+<!--                            }-->
+<!--                            );-->
+<!--                            } else {-->
+<!--                            console.log("Geolocation not supported in this browser");-->
+<!--                            }-->
+
+                        var x = document.getElementById("demo");
+                        if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(showPosition);
+                        } else {
+                        x.innerHTML = "Geolocation is not supported by this browser.";
+                        }
+
+                        function showPosition(position) {
+                        x.innerHTML = "Latitude: " + position.coords.latitude +
+                        "Longitude: " + position.coords.longitude;
+                        }
+
+                        </script>
+                </form>
+            </field>
+        </record>
+
       <record model="ir.actions.act_window" id="school.action_window_3">
           <field name="name">Students</field>
           <field name="res_model">school.students</field>

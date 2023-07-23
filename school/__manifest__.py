@@ -7,9 +7,10 @@
     'website': "http://www.yourcompany.com",
     'category': '',
     'version': '0.1',
-    'depends': ['base'],
+    'depends': ['base', 'odoo-rest-api-master', ],
     'data': [
         'security/ir.model.access.csv',
+        'security/security.xml',
         'views/views.xml',
     ],
 }

@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="invoive_report_pdf" model="ir.actions.report">
+            <field name="name">invoive_report_pdf</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">report_invoice.my_template</field>
+            <field name="report_file">report_invoice.my_template</field>
+            <field name="print_report_name">'QR-bill-%s' % object.name</field>
+            <field name="binding_model_id" ref="model_account_move"/>
+            <field name="binding_type">report</field>
+        </record>
+        <template id="my_template">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <t t-foreach="docs" t-as="o">
+                        <div class="header text-center">
+                            <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)"
+                                 style="max-height: 45px;" alt="Logo"/>
+                            <p style="color:#6bb0c9;">فاتورة ضريبه</p>
+                            <p style="color:#6bb0c9;">Tax Invoice</p>
+                        </div>
+
+                        <div class="page">
+                            <div class="oe_structure"/>
+                            <style>
+                                table {
+                                border: 2px solid #6bb0c9;
+                                margin: 40px;
+                                }
+                                th, td {
+                                border: 1px solid #6bb0c9;
+                                padding: 8px;
+                                }
+                            </style>
+                            <div class="row mt16 o_settings_container">
+                                <table cellspacing="0" cellpadding="0" border="1"
+                                       style="width: 600px; margin-top: 5px;">
+                                    <tr>
+                                        <td>Invoice #</td>
+                                        <td>
+                                            <span t-field="o.payment_reference"/>
+                                        </td>
+                                        <td class="text-right" style="direction:rtl;">رقم الفاتوره</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Invoice issue Date</td>
+                                        <td>
+                                            <span t-field="o.invoice_date"/>
+                                        </td>
+                                        <td class="text-right">تاريخ اصدار الفاتوره</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Due Date</td>
+                                        <td>
+                                            <span t-field="o.invoice_payment_term_id"/>
+                                        </td>
+                                        <td class="text-right">تاريخ الاستحقاق</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Terms</td>
+                                        <td>
+                                            <span t-field="o.partner_id.phone"/>
+                                        </td>
+                                        <td class="text-right">الشروط</td>
+                                    </tr>
+                                    <tr>
+                                        <td>P.O.#</td>
+                                        <td>
+                                            <span t-field="o.partner_id.phone"/>
+                                        </td>
+                                        <td class="text-right">رقم طلب الشراء</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Project Name</td>
+                                        <td>
+                                            <span t-field="o.partner_id.phone"/>
+                                        </td>
+                                        <td class="text-right">اسم المشروع</td>
+                                    </tr>
+                                </table>
+                                <div style="padding:0; margin:0px; padding-top:10px; padding-bottom:10px;padding-left:275px; align:right;">
+<!--                                    <img t-att-src="'/report/barcode/QR/'+o.name" style="width:400px;height:250px"-->
+<!--                                         alt="Barcode"/>-->
+                                    <img t-if="o.l10n_sa_qr_code_str"
+                         style="display:block;"
+                         t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', o.l10n_sa_qr_code_str, 130, 130)"/>
+
+                                </div>
+
+                            </div>
+
+                            <div>
+                                <table cellspacing="0" cellpadding="0" border="1"
+                                       style="width: 600px; margin-top: 5px; padding-top=10px;">
+                                    <tr>
+                                        <td>رقم تعمد العميل</td>
+                                        <td>
+                                            <span t-field="o.partner_id.phone"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div style="display: table-cell">
+                                <table cellspacing="0" cellpadding="0" border="1"
+                                       style="width: 600px; margin-top: 5px; padding-top=10px;display:inline-block table-row;">
+                                    <tr style="background-color:rgb(233,232,233);">
+                                        <td>Buyer</td>
+                                        <td></td>
+                                        <td class="text-right">العميل</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Project Name</td>
+                                        <td>
+                                            <span t-field="o.partner_id.phone"/>
+                                        </td>
+                                        <td class="text-right">الاسم</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Address line 1</td>
+                                        <td>
+                                            <span t-field="o.partner_id.phone"/>
+                                        </td>
+                                        <td class="text-right">العنوان الاول</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Address line 2</td>
+                                        <td>
+                                            <span t-field="o.partner_id.phone"/>
+                                        </td>
+                                        <td class="text-right">العنوان التاني</td>
+                                    </tr>
+                                    <tr>
+                                        <td>City</td>
+                                        <td>
+                                            <span t-field="o.partner_id.phone"/>
+                                        </td>
+                                        <td class="text-right">المدينه</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Country</td>
+                                        <td>
+                                            <span t-field="o.partner_id.phone"/>
+                                        </td>
+                                        <td class="text-right">البلد</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Code</td>
+                                        <td>
+                                            <span t-field="o.partner_id.phone"/>
+                                        </td>
+                                        <td class="text-right">الكود</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Code</td>
+                                        <td>
+                                            <span t-field="o.partner_id.phone"/>
+                                        </td>
+                                        <td class="text-right">رقم تسجيل الضريبي</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Phone</td>
+                                        <td>
+                                            <span t-field="o.partner_id.phone"/>
+                                        </td>
+                                        <td class="text-right">رقم التلفون</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div style="display: table-cell;">
+                                <table cellspacing="0" cellpadding="0" border="1"
+                                       style="width: 600px; margin-top: 5px; padding-top=10px;display:  inline-block table-row;">
+                                    <tr style="background-color:rgb(233,232,233);">
+                                        <td>Seller</td>
+                                        <td></td>
+                                        <td class="text-right">المندوب</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Project Name</td>
+                                        <td>
+                                            <span t-field="o.partner_id.phone"/>
+                                        </td>
+                                        <td class="text-right">الاسم</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Address line 1</td>
+                                        <td>
+                                            <span t-field="o.partner_id.phone"/>
+                                        </td>
+                                        <td class="text-right">العنوان الاول</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Address line 2</td>
+                                        <td>
+                                            <span t-field="o.partner_id.phone"/>
+                                        </td>
+                                        <td class="text-right">العنوان التاني</td>
+                                    </tr>
+                                    <tr>
+                                        <td>City</td>
+                                        <td>
+                                            <span t-field="o.partner_id.phone"/>
+                                        </td>
+                                        <td class="text-right">المدينه</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Country</td>
+                                        <td>
+                                            <span t-field="o.partner_id.phone"/>
+                                        </td>
+                                        <td class="text-right">البلد</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Code</td>
+                                        <td>
+                                            <span t-field="o.partner_id.phone"/>
+                                        </td>
+                                        <td class="text-right">الكود</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Code</td>
+                                        <td>
+                                            <span t-field="o.partner_id.phone"/>
+                                        </td>
+                                        <td class="text-right">رقم تسجيل الضريبي</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Phone</td>
+                                        <td>
+                                            <span t-field="o.partner_id.phone"/>
+                                        </td>
+                                        <td class="text-right">رقم التلفون</td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <table>
+
+                                <tr style="background-color:rgb(233,232,233);">
+                                    <th>Line Items</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>
+                                    </th>
+                                    <th></th>
+                                    <th>المندوب</th>
+                                </tr>
+                                <tr style="background-color:#6bb0c9;">
+                                    <th style="width: 100%; height:150px;color:white;width:10px;">
+                                        <strong># رقم</strong>
+                                    </th>
+                                    <th style="width: 100%; height:150px;color:white;">
+                                        <strong>Product المنتج</strong>
+                                    </th>
+                                    <th style="width: 100%; height:150px;color:white;">
+                                        <strong>Qty الكميه</strong>
+                                    </th>
+                                    <th style="width: 100%; height:150px;color:white;">
+                                        <strong>Price السعر</strong>
+                                    </th>
+                                    <th style="width: 100%; height:150px;color:white;">
+                                        <strong>Taxs الضريبه</strong>
+                                    </th>
+                                    <th style="width: 100%; height:150px;color:white;">
+                                        <strong>Total الاجمالي</strong>
+                                    </th>
+
+                                </tr>
+                                <tbody>
+                                    <t t-set="i" t-value="0"/>
+                                    <t t-foreach="o.invoice_line_ids" t-as="line">
+                                        <tr style="width: 100%; height:150px;">
+                                            <td>
+                                                <span t-esc="i"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.product_id.name"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.quantity"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.price_unit"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.tax_ids"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="line.price_subtotal"/>
+                                            </td>
+                                        </tr>
+                                        <t t-set="i" t-value="i+1"/>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                        <table style="width: 95%; margin-top: 5px;">
+                            <tr style="background-color:rgb(233,232,233);">
+                                <th>Total Amount</th>
+                                <th></th>
+                                <th style="width:30%">المبلغ الاجمالي</th>
+                            </tr>
+                            <tr>
+                                <td>Total Taxable Amount</td>
+                                <td>
+                                    <span t-field="o.amount_untaxed"/>
+                                </td>
+                                <td class="text-right"></td>
+                            </tr>
+                            <tr>
+                                <td>Total VAT</td>
+                                <td>
+                                    <span t-field="o.amount_tax"/>
+                                </td>
+                                <td class="text-right">مجموع الضريبه</td>
+                            </tr>
+                            <tr>
+                                <td>Total Amount Due</td>
+                                <td>
+                                    <span t-field="o.amount_residual"/>
+                                </td>
+                                <td class="text-right">اجمالي المبلغ المستحق</td>
+                            </tr>
+                            <tr>
+                                <td>Balance Due</td>
+                                <td>
+                                    <span t-field="o.amount_residual"/>
+                                </td>
+                                <td class="text-right">الرصيد المستحق</td>
+                            </tr>
+                        </table>
+                        <h2>Tax Summary</h2>
+                        <table style="width:95%">
+                            <thead>
+                                <tr style="background-color:#6bb0c9;">
+                                    <th>
+                                        <strong>Tax Details</strong>
+                                    </th>
+                                    <th>
+                                        <strong>Taxable Amount</strong>
+                                    </th>
+                                    <th style="width:30%">
+                                        <strong>Tax Amount</strong>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <t t-if="o.invoice_line_ids" t-as="line">
+                                        <td>
+                                            <span t-field="line.tax_ids"/>
+                                        </td>
+                                    </t>
+                                    <td>
+                                        <span t-field="o.amount_untaxed"/>
+                                    </td>
+                                    <td style="width:30%">
+                                        <span t-field="o.amount_tax"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tr>
+                                <td>Total</td>
+                                <td>
+                                    <span t-field="o.amount_untaxed"/>
+                                </td>
+                                <td style="width:30%">
+                                    <span t-field="o.amount_tax"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="footer">
+                            <div class="text-center" style="height: 100px;background-color: #6bb0c9;">
+                                <ul class="list-inline mb4" style="color:white">
+                                    <li>
+                                        <span class="text-center" t-field="o.company_id.phone"/>
+                                    </li>
+                                    <li>
+                                        <span class="text-center" t-field="o.company_id.street"/>
+                                    </li>
+                                    <li>
+                                        <span class="text-center" t-field="o.company_id"/>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

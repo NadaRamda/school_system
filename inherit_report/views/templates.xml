@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="inherit_invoice_report" inherit_id="account.report_invoice_document">
+        <xpath expr="//div[@class='page']//table/thead/tr/th" position="inside">
+                <th name="th_description" class="text-left"><span>Barcode</span></th>
+            </xpath>
+            <xpath expr="//div[@class='page']//table/tbody/t/tr/t/td" position="after">
+                <td t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                    <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', line.product_id.barcode, 600, 100)" style="width:100%;height:50px"/>
+                                        </td>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

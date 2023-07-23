@@ -15,16 +15,17 @@ class SchoolStudents(models.Model):
         _name = 'school.students'
         _description = 'school.students'
 
-
+        teacher_id = fields.Many2one('res.users')
+        student_id = fields.Many2one('res.partner')
         gender = fields.Char(string="Gender")
         class_num = fields.Many2one('school.class',string="Class")
-        grade =fields.Char(related='class_num.grade')
+        subject_ids = fields.One2many('school.subject', 'student_id')
 
 class SchoolClass(models.Model):
         _name = 'school.class'
         _description = 'school.class'
 
-        class_name=fields.Char("Class")
+        class_num = fields.Char("Class")
         grade = fields.Many2one('school.grade',string='Grade')
 
 
@@ -35,7 +36,7 @@ class SchoolSubject(models.Model):
 
 
     subject_name =fields.Char(string="Subject")
-    subject =fields.Many2one('school.grade')
+    student_id = fields.Many2one('school.students')
 
 
 

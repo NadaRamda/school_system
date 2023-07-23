@@ -1,0 +1,37 @@
+<odoo>
+  <data>
+   <record id="contract_wizard" model="ir.ui.view">
+        <field name="name">contract wizard</field>
+        <field name="model">contract.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="create wizard">
+                <group class="oe_title">
+                     <group>
+                        <field name="date"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="generate_report_pdf" string="Print Pdf" type="object"
+                    class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_contract_wizard" model="ir.actions.act_window">
+        <field name="name">contract wizard</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">contract.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="contract_wizard"/>
+        <field name="target">new</field>
+    </record>
+    <menuitem name="Report"
+              parent="hr.menu_hr_root"
+              id="hr.menu_0"/>
+    <menuitem name="contract report"
+                  id="menu_1"
+                  parent="hr.menu_0"
+                  action="action_contract_wizard"/>
+  </data>
+</odoo>
